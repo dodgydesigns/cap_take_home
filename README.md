@@ -12,7 +12,3 @@ To run these classes, I suggest you create a virtual environment using virtualen
 4. Type: pip install -r requirements.txt
 
 This will install all the required dependencies for the projects to run.
-
-
-Requirements.txt
-pip install nltk
