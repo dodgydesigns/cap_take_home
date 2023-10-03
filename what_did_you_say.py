@@ -60,18 +60,40 @@ if __name__ == "__main__":
 
     # Nice easy one
     wdys.closest_word("potato", ["potato", "pumpkin", "cat"])
+    # Don't argue (Science & Maths always wins), the closest word to potato from:
+    # ['potato', 'pumpkin', 'cat']
+    # is...drum roll please...
+    #    potato
 
     # Bit harder
     wdys.closest_word("potato", ["pot", "potash", "potassium"])
+    # Don't argue (Science & Maths always wins), the closest word to potato from:
+    # ['pot', 'potash', 'potassium']
+    # is...drum roll please...
+    #    potash
 
     # Closest to 'empty'
     wdys.closest_word("", ["pot", "potash", "potassium"])
+    # Don't argue (Science & Maths always wins), the closest word to  from:
+    # ['pot', 'potash', 'potassium']
+    # is...drum roll please...
+    #    pot
 
     # Empty list
     wdys.closest_word("*what*", [])
+    # COME ON! I have to be able to compare *what* to something!
+    # Try again with a list of actual possibilities.
 
     # Numbers
     wdys.closest_word("11", ["12345", "332211", "potassium"])
+    # Don't argue (Science & Maths always wins), the closest word to 11 from:
+    # ['12345', '332211', 'potassium']
+    # is...drum roll please...
+    #    12345
 
     # One for luck - and because it's good fun.
     wdys.closest_word("arakeat", ["zzzzzzzz", "parakeet", "potassium"])
+    # Don't argue (Science & Maths always wins), the closest word to arakeat from:
+    # ['zzzzzzzz', 'parakeet', 'potassium']
+    # is...drum roll please...
+    #    parakeet

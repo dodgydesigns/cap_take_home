@@ -104,3 +104,4 @@ if __name__ == "__main__":
             ],
         ),
     )
+    # The speed at time 35 is 0.78.

@@ -62,11 +62,21 @@ if __name__ == "__main__":
     ptd.present_path_divergence(
         Path("/home/daniel/git/ws/py311/test.yaml"), Path("/home/daniel/git/slippers")
     )
+    # The common route of paths:
+    #    /home/daniel/git/ws/py311/test.yaml and /home/daniel/git/slippers is:
+    #    /home/daniel/git
+    # Which leaves a difference of:
+    #    /ws/py311/test.yaml
 
     # Missing a path
     ptd.present_path_divergence(None, Path("/home/daniel/git/slippers"))
+    # COME ON! You have to provide 2 valid paths:
+    # Path1 was None and path2 was /home/daniel/git/slippers.
+    # Try again.
 
     # Providing an invalid path
     ptd.present_path_divergence(
         Path("this path\\should / not work"), Path("/home/daniel/git/slippers")
     )
+    # Give me a break! Can't mix absolute and relative paths.
+    # Try again.
