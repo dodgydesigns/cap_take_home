@@ -28,7 +28,7 @@ def determine_location(directions: list[(float, float)]) -> (float, float):
     current_x_y = (0, 0)
     for move in directions:
         # Angles must be in radians
-        angle = math.radians(move[0])  # - quadrant_subtractor)
+        angle = math.radians(move[0])
         magnitude = move[1]
         x = math.sin(angle) * magnitude
         y = math.cos(angle) * magnitude
