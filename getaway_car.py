@@ -24,15 +24,27 @@ def calculate_distance(point1: PointInTime, point2: PointInTime):
     return abs(math.sqrt(pow((point2.x - point1.x), 2) + pow((point2.y - point1.y), 2)))
 
 
-def interpolate_speed(time, speed_dict):
+def interpolate_speed(required_time, speed_dict):
     """
     The change in velocity at a time is given by:
     start_time_speed = Speed(node where node's ts>time)
     end_time_speed = Speed(node where node's ts<time)
     differential = end_time_speed - start_time_speed
 
-    So speed at time 'time' is start_time_speed + (time - start_time) * differential
+    So speed at time 'time' is start_time_speed + (time - start_time) * speed differential
     """
+    # Get list of closest values and pick lower and upper nodes
+    closest_list = sorted(speed_dict.keys(), key=lambda x: abs(required_time - x))
+    left_speed = speed_dict[closest_list[0]]
+    right_speed = speed_dict[closest_list[1]]
+
+    # As per above: start_time_speed + (time - start_time) * speed differential
+    interpolate_speed = left_speed + (required_time - closest_list[0]) * (
+        right_speed - left_speed
+    )
+
+    # Round for output
+    return "%.2f" % round(interpolate_speed, 2)
 
 
 def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
@@ -55,26 +67,40 @@ def speed_at_time(at_time: float | int, path: list[PointInTime]) -> str:
       time = 20 - 10 = 10
       speed = dd/dt
       So speed at time 20 is 1 (not 0.5 as the question stipulates)
-
-      Worked example:
-        Node  d       dt    ds        Speed = ds/dt
-        0     0,10    10    0         0
-        1     10,20   30    14.4      0.47
-        2     20,5    15    18.03     1.20
-        3     30,30   5     26.93     5.39
     """
-
-    speed_dict = []
+    previous_time = 0
+    speed_dict = {}
     for counter, point_in_time in enumerate(path):
         if counter > 0:
             distance = calculate_distance(point_in_time, path[counter - 1])
-            time = point_in_time.ts - path[counter - 1].ts
-            speed = distance / time
-            speed_dict[counter] = speed
-    print(speed_dict)
+            time_delta = point_in_time.ts - previous_time
+            previous_time = point_in_time.ts
+            speed = distance / time_delta
+            speed_dict[point_in_time.ts] = speed
+
+    return f"The speed at time {at_time} is {interpolate_speed(at_time, speed_dict)}."
 
 
 if __name__ == "__main__":
     """Application entry point."""
 
-    print(calculate_distance(PointInTime(0, 5, 0), PointInTime(5, 5, 0)))
+    # Worked example:
+    #   Node  d       t     dt    ds        Speed = ds/dt
+    #   0     0,0     0     0     0         0
+    #   1     0,10    10    10    10        1
+    #   2     10,20   30    20    14.4      0.71
+    #   3     20,5    55    25    18.03     0.72
+    #   4     30,30   60    5     26.93     5.39
+    print(
+        "\n",
+        speed_at_time(
+            35,
+            [
+                PointInTime(0, 0, 0),
+                PointInTime(0, 10, 10),
+                PointInTime(10, 20, 30),
+                PointInTime(20, 5, 55),
+                PointInTime(30, 30, 60),
+            ],
+        ),
+    )
